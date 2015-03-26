@@ -9,8 +9,22 @@ angular
   .module('app', appDependencies)
   .config(appConfig);
 
+//Controllers
 require('./app.controller');
 require('./about.controller');
+require('./menu.controller');
+require('./flow.controller');
+require('./counterparties.controller');
+require('./dos.controller');
+
+//API
+require('./services/api.service');
+
+//Common JS
+require('./common/flow.common');
+require('./common/cp.common');
+require('./common/dos.common');
+require('./common/mouseover.common');
 
 $('body').prepend(require('../views/index.jade')());
 
@@ -25,6 +39,22 @@ function appConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
     {
       name: 'about',
       path: 'about'
+    },
+    {
+      name: 'menu',
+      path: 'menu'
+    },
+    {
+      name: 'counterparties',
+      path: 'counterparties'
+    },
+    {
+      name: 'flow',
+      path: 'flow'
+    },
+    {
+      name: 'dos',
+      path: 'dos'
     }
   ];
 

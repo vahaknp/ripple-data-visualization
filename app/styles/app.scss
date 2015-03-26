@@ -16,7 +16,7 @@ body {
 
 .container {
   width: auto;
-  max-width: 680px;
+  max-width: 100%;
   padding: 0 15px;
 }
 .container .text-muted {
@@ -27,3 +27,389 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
+$color_guardsman_red_approx: #c00;
+$color_green_approx: #0c0;
+$color_mountain_mist_approx: #999;
+$black: #000;
+$color_black_haze_approx: #f6f6f6;
+$red: red;
+$color_japanese_laurel_approx: green;
+
+.dot {
+  fill: none;
+  stroke: $color_guardsman_red_approx;
+  stroke-width: 1px;
+  pointer-events: all;
+  &.received {
+    stroke: $color_green_approx;
+  }
+}
+.discrepancy {
+  font-style: italic;
+  font-weight: normal;
+  font-size: small;
+  color: $color_mountain_mist_approx;
+}
+.line {
+  shape-rendering: crispEdges;
+  fill: none;
+  stroke: $black;
+}
+.area {
+  shape-rendering: crispEdges;
+  fill: $color_black_haze_approx;
+  stroke: none;
+}
+.background {
+  fill: none;
+  pointer-events: all;
+}
+.pane {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+.transactions {
+  width: 100%;
+  max-height: 150px;
+  width: 960px;
+  overflow: auto;
+  table {
+    width: 100%;
+  }
+}
+.sent {
+  color: $red;
+}
+
+.jeboom-tooltip td {
+  white-space: nowrap;
+  padding: 3px 8px;
+}
+
+//colors
+$black: #000;
+
+//fonts
+$font_0: sans-serif;
+
+//@extend-elements
+//original selectors
+//.axis path, .axis line
+%extend_1 {
+  fill: none;
+  stroke: $black;
+  stroke-width: .5;
+}
+
+
+body {
+  font-family: $font_0;
+}
+h1 {
+  font-weight: 300;
+}
+h2 {
+  font-weight: 300;
+}
+h3 {
+  font-weight: 300;
+}
+.axis {
+  shape-rendering: crispEdges;
+  path {
+    @extend %extend_1;
+  }
+  line {
+    @extend %extend_1;
+  }
+  text {
+    font: 10px $font_0;
+  }
+}
+
+//colors
+$color_azure_approx: #346aa9;
+$white: #fff;
+$color_celeste_approx: #ccc;
+$color_steel_blue_approx: #4a7ab3;
+$color_alto_approx: #ddd;
+
+html {
+  overflow-y: scroll;
+}
+.wrapper {
+  margin-top: 50px;
+}
+table {
+  padding: 10px;
+}
+th {
+  padding: 10px;
+}
+td {
+  padding: 10px;
+}
+#clauses {
+  padding: 10px 0;
+}
+.form-group {
+  position: relative;
+  top: -10px;
+}
+.small_logo {
+  margin: 7px 15px 0 0;
+}
+.navbar-inverse {
+  background-color: $color_azure_approx;
+  border-color: $color_azure_approx;
+  background-image: none;
+  .navbar-nav>li>a {
+    color: $white;
+    &:hover {
+      color: $color_celeste_approx;
+    }
+  }
+  .navbar-nav>.active>a {
+    background-image: none;
+    background-color: $color_steel_blue_approx;
+    &:hover {
+      background-color: $color_alto_approx;
+    }
+    &:focus {
+      background-color: $color_alto_approx;
+    }
+  }
+}
+button {
+  &#contacts-load {
+    margin-left: 15px;
+  }
+  &#annotation-search {
+    margin: 10px 0;
+  }
+}
+.export {
+  float: left;
+}
+form#search-results {
+  padding-bottom: 15px;
+}
+input#username {
+  margin-right: 15px;
+}
+p.clause.form-group {
+  margin: 5px 5px 5px 0;
+}
+
+
+/* animation for png loader */
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+.loader {
+  -webkit-animation: rotating 1s linear infinite;
+  -moz-animation: rotating 1s linear infinite;
+  -ms-animation: rotating 1s linear infinite;
+  -o-animation: rotating 1s linear infinite;
+  animation: rotating 1s linear infinite;
+}
+
+//colors
+$color_mine_shaft_approx: #333;
+$color_gallery_approx: #eee;
+$black: #000;
+$red: red;
+$color_japanese_laurel_approx: green;
+$color_chartreuse_approx: #76ee00;
+$yellow: #ff0;
+$white: #fff;
+$color_celeste_approx: #ccc;
+
+//fonts
+$font_0: sans-serif;
+
+//@extend-elements
+//original selectors
+//.axis path, .axis line
+%extend_1 {
+  stroke: $black;
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+
+body {
+  font-family: $font_0;
+}
+h1 {
+  font-weight: 300;
+}
+h2 {
+  font-weight: 300;
+}
+.node {
+  cursor: pointer;
+  stroke: $color_mine_shaft_approx;
+  stroke-width: .5px;
+  fill: $color_gallery_approx;
+  fill-opacity: .5;
+  &.verified {
+    fill: $color_chartreuse_approx;
+  }
+}
+.source {
+  stroke: $color_mine_shaft_approx;
+  stroke-width: .5px;
+  fill: $color_gallery_approx;
+}
+.fade {
+  opacity: .2;
+}
+.target {
+  line {
+    stroke: $black;
+    stroke-opacity: .5;
+    stroke-width: .5px;
+    shape-rendering: crispEdges;
+  }
+  &.fade line {
+    display: none;
+  }
+}
+.sent {
+  fill: $red;
+}
+
+.link {
+  fill: none;
+  stroke: $color_mine_shaft_approx;
+  stroke-width: .5px;
+}
+.wallet-id {
+  width: 300px;
+}
+.highlight {
+  fill: $yellow;
+  .node {
+    fill: $red;
+  }
+}
+line {
+  stroke: $black;
+  fill: none;
+}
+.transaction {
+  stroke: $black;
+  fill: none;
+}
+.axis {
+  path {
+    @extend %extend_1;
+  }
+  line {
+    @extend %extend_1;
+  }
+}
+.help {
+  font-style: italic;
+  font-size: small;
+}
+#contacts {
+  float: right;
+  padding: 0 3px;
+  background: $white;
+}
+table {
+  border: solid $color_celeste_approx 1px;
+  text-align: left;
+}
+th {
+  border: solid $color_celeste_approx 1px;
+  text-align: left;
+}
+td {
+  border: solid $color_celeste_approx 1px;
+  text-align: left;
+}
+.error {
+  background: $red;
+  color: $white;
+}
+.right {
+  text-align: right;
+}
+.pie {
+  fill-opacity: .8;
+}
+.grey {
+  color: $color_celeste_approx;
+}
+text.verified {
+  fill: $color_chartreuse_approx;
+}
+#search-results table {
+  width: 100%;
+}
+
+.jeboom-tooltip {
+  z-index: 100;
+  padding: 5px;
+  position: absolute;
+  pointer-events: none;
+  background: $white;
+  border: solid $color_celeste_approx 1px;
+  //Instead of the line below you could use @includeborder-radius($radius, $vertical-radius)
+  border-radius: 5px;
+  text-align: left;
+  width: 400px;
+  .stream {
+    overflow: hidden;
+    height: 300px;
+    &.full {
+      height: 600px;
+    }
+  }
+  .wrapper {
+    margin: .5em 0;
+    color: $color_celeste_approx;
+    cursor: pointer;
+  }
+  .active {
+    color: $black;
+  }
+  .heading {
+    white-space: nowrap;
+  }
+}
+

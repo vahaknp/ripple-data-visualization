@@ -1,0 +1,36 @@
+.dashboard-container(ng-controller="CounterpartiesController")
+  .wrapper
+      .container(style='padding-top: 1em')
+          .form-group
+              .col-sm-5
+                input#wallet.form-control(type='text', placeholder='Wallet')   
+              .col-sm-5
+                button#load.btn.btn-primary Add Counterparties 
+          form#search-results
+            legend Results
+            |     
+            table
+              thead
+                th Wallet ID
+                th Ripple Name
+                th Owner
+                th USD
+                th BTC
+                th XRP
+                th Other
+                th Total
+              |     
+              tbody#results
+              |     
+              tfoot#results-totals
+                tr
+                  th(colspan='3') Totals
+          |   
+          p 
+            #status
+            |   
+            #chart
+            |   
+            legend Transactions
+            |   
+            #transactions

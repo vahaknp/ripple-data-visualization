@@ -1,0 +1,18 @@
+.dashboard-container(ng-controller="FlowController")
+  form#wallets.form-horizontal
+    .form-group
+        .col-sm-5
+          input#wallet.form-control(type='text', placeholder='Wallet')   
+        .col-sm-5
+          button#load.btn.btn-primary Show Flow
+  div#control
+    form#dates.form-horizontal
+      .form-group
+        .col-sm-3
+          input#startDate.form-control(type='text', placeholder='Start Date')
+        .col-sm-3
+          input#endDate.form-control(type='text', placeholder='End Date')
+        .col-sm-3
+          button#loadDates.btn.btn-primary Submit
+    div#dropdowns
+  div#chart
