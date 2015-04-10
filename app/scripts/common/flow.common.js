@@ -107,6 +107,8 @@ function fof($scope, mouseover) {
 
     function drawFlow(transactions) {
 
+      chart.html('');
+
       self.graphWrapper = chart.append("div").attr("id", "chartWrapper");
 
       self.graph = self.graphWrapper.append("svg")
