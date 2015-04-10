@@ -15,6 +15,7 @@ function CounterpartiesController ($scope, api, cp, mouseover)
   var accounts = [];
 
   var format = d3.format(",.2f");
+  var status = d3.select('.status');
 
   var svg = d3.select("#chart").append("svg")
     .attr("width", width)
@@ -30,9 +31,13 @@ function CounterpartiesController ($scope, api, cp, mouseover)
 
   d3.select("#load").on("click", function(){
     var account = document.getElementById("wallet").value;
-    if (accounts.indexOf(account) === -1) {
+    if (accounts.indexOf(account) === -1 && account.length > 30 && account.length < 40 && account[0] === "r") {
       accounts.push(account);
       getLines(accounts);
+      status.html('');
+    }
+    else {
+      status.html('Please enter valid Ripple Address.');
     }
   });
 

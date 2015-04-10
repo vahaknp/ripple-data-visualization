@@ -11,6 +11,8 @@ function DosController ($scope, api, dos, mouseover)
 
   (function() {
 
+    var status = d3.select('.status');
+
     var abortable = [];
 
     var legs = [];
@@ -66,21 +68,37 @@ function DosController ($scope, api, dos, mouseover)
       var xhr;
       while (xhr = abortable.pop()) xhr.abort();
       var wallets = [];
-      d3.selectAll(".wallet").each(function() { wallets.push(this.value); });
-
-      nodeByAccount = {};
-      linkByAccounts = {};
-      nodes = [];
-      links = [];
-
-      wallets.forEach(function(d, i) {
-        var node = {account: d, fixed: true, x: width * (i ? .75 : .25), y: height / 2, depth: 0, label: i ? "B" : "A", children: []};
-        nodes.push(node);
-        nodeByAccount[d] = node;
-        transactions(d, updateGraph(1, d3.select("#status-" + i)));
+      d3.selectAll(".wallet").each(function() { 
+        if (this.value.length > 30 && this.value.length < 40 && this.value[0] === "r") {
+          wallets.push(this.value);
+        }
+        else {
+          wallets = [];
+          status.html('Please enter valid Ripple Addresses.');
+          console.log("nonez");
+          return;
+        }
       });
 
-      update();
+      if (wallets.length === 2) {
+
+        status.html('');
+
+        nodeByAccount = {};
+        linkByAccounts = {};
+        nodes = [];
+        links = [];
+
+        wallets.forEach(function(d, i) {
+          var node = {account: d, fixed: true, x: width * (i ? .75 : .25), y: height / 2, depth: 0, label: i ? "B" : "A", children: []};
+          nodes.push(node);
+          nodeByAccount[d] = node;
+          transactions(d, updateGraph(1, d3.select("#status-" + i)));
+        });
+
+        update();
+
+      }
     }
 
     function updateGraph(depth, status) {
