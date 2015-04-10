@@ -1,13 +1,16 @@
 div(ng-controller="DosController")
   form#wallets.form-horizontal
     .form-group
-      label Wallet A 
-        input.form-control.wallet(type='text', placeholder='Wallet A', value='')
+      .col-sm-5
+        label Wallet A 
+          input.form-control.wallet(type='text', placeholder='Wallet A', value='')
     .form-group
-      label Wallet B   
-        input.form-control.wallet(type='text', placeholder='Wallet B', value='')  
+      .col-sm-5
+        label Wallet B   
+          input.form-control.wallet(type='text', placeholder='Wallet B', value='')  
     .form-group
-      button#load.btn.btn-primary Find Paths
+      .col-sm-5
+        button#load.btn.btn-primary Find Paths
   .col-sm-5
     .status 
   br 
