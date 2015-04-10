@@ -13,17 +13,24 @@ function FlowController ($scope, api, fof) {
   var account;
   var LOADER_PNG = "app/images/rippleThrobber.png";
   var loader;
+  var status = d3.select('.status');
 
   d3.select('#load').on('click', function(){
     account = document.getElementById("wallet").value;
-    d3.select("#dropdowns").html("");
-    d3.select("#chart").html("");
+    if (account.length > 30 && account.length < 40 && account[0] === "r") {
+      d3.select("#dropdowns").html("");
+      d3.select("#chart").html("");
 
-    loader = d3.select("#chart").append("img")
-      .attr("class", "loader")
-      .attr("src", LOADER_PNG);
+      loader = d3.select("#chart").append("img")
+        .attr("class", "loader")
+        .attr("src", LOADER_PNG);
 
-    getTx(account, null);
+      getTx(account, null);
+      status.html('');
+    }
+    else {
+      status.html('Please enter valid Ripple Address.');
+    }
   });
 
 

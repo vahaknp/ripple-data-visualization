@@ -11,7 +11,6 @@ angular
 
 //Controllers
 require('./app.controller');
-require('./about.controller');
 require('./menu.controller');
 require('./flow.controller');
 require('./counterparties.controller');
@@ -35,10 +34,6 @@ function appConfig ($stateProvider, $urlRouterProvider, $locationProvider) {
     {
       name: 'main',
       path: ''
-    },
-    {
-      name: 'about',
-      path: 'about'
     },
     {
       name: 'menu',
