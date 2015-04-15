@@ -32,80 +32,11 @@ function fof($scope, mouseover) {
     var extent, extent2, y, y2, yAxis, yAxis2, line, graphArea, status, dot, x, xAxis, dotY;
     var currencyToLoad, issuerToLoad, transactionList;
 
-
-    balances.forEach(function(transaction) {
-
-      if (transaction.currency) {
-        currency = transaction.currency;
-        if (transaction.issuer) {
-          issuer = transaction.issuer;
-          if (currencies.hasOwnProperty(currency)) {
-            (currencies[currency].hasOwnProperty(issuer) ? currencies[currency][issuer] : currencies[currency][issuer] = []).push(transaction);
-          }
-          else {
-            currencies[currency] = {};
-            currencies[currency][issuer] = [transaction];
-          }
-        }
-        else {
-          (currencies.hasOwnProperty(currency) ? currencies[currency] : currencies[currency] = []).push(transaction);
-        }
-      }
-
-    });
-
-    currencyList = Object.keys(currencies);
-
-    console.log("Currencies:", currencies);
-    console.log("currencyList:", currencyList);
-
-    loadDropdowns();
-
-    function loadDropdowns() {
-
-      var currencySelect   = dropdowns.append("select").attr("class","currency").on("change", changeCurrency);
-      var gatewaySelect    = dropdowns.append("select").attr("class","gateway").on("change", changeGateway);
-      var selectedCurrency = "XRP";
-
-      var option = currencySelect.selectAll("option")
-        .data(currencyList)
-        .enter().append("option")
-        .attr("class", function(d){return d})
-        .property("selected", function(d) { return selectedCurrency && d === selectedCurrency; })
-        .text(function(d){return d});  
-
-      changeCurrency();
-
-      function changeCurrency() {
-        var currency = currencySelect.node().value;
-        var list = currency === "XRP" ? [""] :
-              Object.keys(currencies[currency]);
-
-        var option = gatewaySelect.selectAll("option").data(list, String);
-        
-        option.enter().append("option").text(function(d){return d});
-        option.exit().remove();
-        if (currency=="XRP") gatewaySelect.attr("disabled", "true");
-        else gatewaySelect.attr('disabled', null); 
-
-        changeGateway();
-      }
-
-      function changeGateway(){
-        currencyToLoad  = currencySelect.node().value;
-        if (currencyToLoad === "XRP") {
-          transactionList = currencies[currencyToLoad];
-        }
-        else {
-          issuerToLoad    = gatewaySelect.node().value;
-          transactionList = currencies[currencyToLoad][issuerToLoad];
-        }
-        console.log(transactionList);
-        drawFlow(transactionList);
-      }
-    }
+    drawFlow(balances);
 
     function drawFlow(transactions) {
+
+      console.log("Drawing:", transactions);
 
       chart.html('');
 

@@ -7,7 +7,7 @@ angular
 FlowController.$inject = ['$rootScope', 'api', 'fof'];
 
 function FlowController ($scope, api, fof) {
-  //var account = 'r3NwYomHtNynjCYLFSPB7Yva3LUBQDbWHe';
+
   var balanceChanges = [];
   var options = {};
   var account;
@@ -25,7 +25,7 @@ function FlowController ($scope, api, fof) {
         .attr("class", "loader")
         .attr("src", LOADER_PNG);
 
-      getTx(account, null);
+      getBalanceChanges(account, null);
       status.html('');
     }
     else {
@@ -34,100 +34,61 @@ function FlowController ($scope, api, fof) {
   });
 
 
-  function getTx (account, marker) {
-    options = {
-      ledger_index_min : -1,
-      ledger_index_max : -1,
-      account : account
-    };
+  function getBalanceChanges (account, marker) {
+    options = {};
     if (marker) options.marker = marker;
-    api.getAccountTx(options, function(err, response){
+    api.getBalanceChanges(account, options, function(err, response){
       if (err) console.log("Error:", err);
       else {
-        console.log("Response:", response);
-        balanceChanges = balanceChanges.concat(prepareTx(account, response.transactions));
+        balanceChanges = balanceChanges.concat(prepareTx(response.balance_changes));
         if (response.marker && balanceChanges.length < 5000) {
-          getTx(account, response.marker)
+          getBalanceChanges(account, response.marker)
         }
         else {
-          drawFlow(balanceChanges);
+          console.log("Final:", balanceChanges);
+          fof.FlowCharts(balanceChanges);
         }
       }
     });
   }
 
 
-  function prepareTx(account, transactions) {
-    var transaction, nodes, node, nodeType, nodeField, balanceChange;
+  function prepareTx(changes) {
     var balanceChanges = [];
 
-    for (var i=0; i<transactions.length; i++) {
-      transaction = transactions[i];
-      nodes       = transaction.meta.AffectedNodes;
+    changes.forEach(function(change) {
 
-      //console.log(nodes);
-
-      for (var j=0; j<nodes.length; j++) {
-        node        = nodes[j];
-        nodeType    = node.CreatedNode || node.ModifiedNode || node.DeletedNode;
-        nodeField   = nodeType.NewFields || nodeType.FinalFields;
-
-        //Deal with missing NodeField
-        if (nodeField) {
-
-          // console.log("N:", node);
-          // console.log("NT:", nodeType);
-          // console.log("NF:", nodeField);
-
-          balanceChange = {
-            //account      : account,
-            tx           : transaction.tx,
-            ledger_index : transaction.tx.ledger_index,
-            date         : formatDate(transaction.tx.date)
-          }
-
-          if (nodeType.LedgerEntryType === "AccountRoot") {
-            if (nodeField.Account === account) {
-              balanceChange.issuer   = "";
-              balanceChange.currency = "XRP";
-              balanceChange.value    = +nodeField.Balance * 1e-6;
-              balanceChanges.push(balanceChange);
-            }
-          }
-          else if (nodeType.LedgerEntryType === "RippleState") {
-            if (nodeField.HighLimit.issuer === account) {
-              balanceChange.issuer   = nodeField.LowLimit.issuer;
-              balanceChange.currency = nodeField.Balance.currency;
-              balanceChange.value    = -nodeField.Balance.value;
-              balanceChanges.push(balanceChange);
-            }
-          }
-
-        }
-
+      var bc = {
+        value        : parseFloat(change.final_balance),
+        amount       : change.change,
+        currency     : change.currency,
+        issuer       : change.issuer ? change.issuer : "",
+        date         : moment(change.executed_time)._d,
+        ledger_index : change.ledger_index,
+        change_type  : change.change_type
       }
 
-    }
+      //Normalize if not specific.
 
-    //console.log("BCs:", balanceChanges);
+      if (change.currency !== "XRP") {
+        
+        var options = {
+          limit    : 1,
+          end      : moment(change.executed_time).format(),
+          interval : "1day"
+        };
+
+        api.normalize(change.currency, change.issuer, options, function(err, rate) {
+          if (err) console.log("Rate Error:", err);
+          else console.log("Rate:", rate);
+        });
+      }
+
+      balanceChanges.push(bc);
+
+    });
+
     return balanceChanges;
   }
 
-  var bases = ["USD"],
-    BITSTAMP = "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
-    RATES = {};
-
-  function drawFlow(balances) {
-    fof.FlowCharts(balances);
-  }
-
-  function formatDate(d) {
-    return new Date(9466848e5 + d * 1e3);
-  }
-
 }
-
-1100
-200
-700
-1800

@@ -8,6 +8,8 @@ api.$inject = ['$rootScope'];
 
 function api () {
 
+  //Old API calls
+
   var remote = new ripple.Remote({
     servers: [ 'wss://s1.ripple.com:443' ]
   });
@@ -42,6 +44,34 @@ function api () {
     remote.requestAccountTransactions(options, function(err, tx) {
       if (err) callback(err);
       else callback(null, tx);
+    });
+  }
+
+  //New API calls
+
+  var url = 'http://23.22.138.145:7111/v1';
+  var querystring = require('querystring');
+
+  this.getBalanceChanges = function (account, options, callback) {
+
+    var endpoint = url + '/accounts/' + account + '/balance_changes?' + querystring.stringify(options);
+    console.log("Endpoint:", endpoint);
+
+    $.ajax({ 
+      url  : endpoint,
+      success : function (tx) { callback(null, tx) },
+      error : function (err) { callback(err) } 
+    });
+
+  }
+
+  this.normalize = function (currency, issuer, options, callback) {
+    var endpoint = url + '/exchanges/' + currency + '+' + issuer + '/XRP?' + querystring.stringify(options);
+    console.log("REP:", endpoint);
+    $.ajax({ 
+      url  : endpoint,
+      success : function (exchange) { callback(null, exchange.exchanges[0].vwap) },
+      error : function (err) { callback(err) } 
     });
   }
 
